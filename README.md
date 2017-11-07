@@ -43,7 +43,9 @@ password: <String>
 }
 ```
 
-### 설치하기
+## 설치하기
+
+### 서버 설치
 
 **포크하지 마시고 바로 클론하세요.**
 
@@ -53,7 +55,14 @@ cd nss-api
 npm install
 ```
 
-### 실행하기
+### 데이터베이스 설정
+
+* [mlab](https://mlab.com) 가입하기
+* 데이터베이스 생성
+* 데이터베이스 사용자 생성
+* `app.js`내에서 `DB_URL`, `DB_USER`, `DB_PASSWORD` 변경
+
+## 실행하기
 
 ```
 npm start
