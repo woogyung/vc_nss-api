@@ -21,8 +21,7 @@ router.post('/signup', function (req, res, next) {
     var hmacDigest = Base64.stringify(hmacSHA512(hashDigest, req.body.username));
 
     User.findOne({
-      username: req.body.username,
-      password: hmacDigest
+      username: req.body.username
     }).exec()
       .then((user) => {
         if (!user) {
