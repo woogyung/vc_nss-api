@@ -5,9 +5,9 @@ var sha256 = require('crypto-js/sha256');
 var hmacSHA512 = require('crypto-js/hmac-sha512');
 var Base64 = require('crypto-js/enc-base64');
 
-router.get('/users/:id', function (req, res, next) {
+router.get('/status-check', function (req, res, next) {
   res.status(200).json({
-    message: 'hello world'
+    message: 'Hello, Vanilla'
   });
 });
 
@@ -70,10 +70,16 @@ router.post('/login', function (req, res, next) {
       password: hmacDigest
     }).select('-password').exec()
       .then((user) => {
-        res.status(201).json({
-          data: user,
-          access_token: hmacDigest
-        });
+        if (user) {
+          res.status(200).json({
+            data: user,
+            access_token: hmacDigest
+          });
+        } else {
+          res.status(401).json({
+            message: '사용자 이름과 비밀번호가 틀렸습니다.'
+          });
+        }
       })
       .catch((error) => {
         res.status(500).json({
