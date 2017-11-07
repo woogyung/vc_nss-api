@@ -64,6 +64,8 @@ npm install
 
 ## 실행하기
 
-```
+```sh
 npm start
 ```
+
+Address: `localhost:8080`
