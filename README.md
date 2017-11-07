@@ -1,10 +1,10 @@
 ![Vanilla Coding](https://s3.ap-northeast-2.amazonaws.com/vanilla-coding/Assets/logo_regular%403x.png)
 
-## News Search System API
+# News Search System API
 
-### Endpoints
+## Endpoints
 
-**1. POST `/signup`**
+### 1. POST `/signup`
 - Required request body
 ```
 username: <String>
@@ -16,7 +16,7 @@ password: <String>
   "message": "가입 완료"
 }
 ```
-**2. POST `/login`**
+### 2. POST `/login`
 - Required Request body
 ```
 username: <String>
@@ -28,7 +28,7 @@ password: <String>
   "access_token": "ghs__df=423njsfdruur12jfjuh4!?frt34563ju8h84h2d10"
 }
 ```
-**3. GET `/users/:id`**
+### 3. GET `/users/:id`
 - Required request header
 ```json
 {
