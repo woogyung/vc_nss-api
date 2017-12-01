@@ -6,6 +6,7 @@ var hmacSHA512 = require('crypto-js/hmac-sha512');
 var Base64 = require('crypto-js/enc-base64');
 var cors = require('cors');
 var jwt = require('jsonwebtoken');
+var request = require('request');
 
 var JWT_SECRET = 'vAn!LlaCod!NG';
 
@@ -13,6 +14,35 @@ var corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
 };
+
+var VALID_SECTIONS = [
+  'home',
+  'opinion',
+  'world',
+  'national',
+  'politics',
+  'upshot',
+  'nyregion',
+  'business',
+  'technology',
+  'science',
+  'health',
+  'sports',
+  'arts',
+  'books',
+  'movies',
+  'theater',
+  'sundayreview',
+  'fashion',
+  'tmagazine',
+  'food',
+  'travel',
+  'magazine',
+  'realestate',
+  'automobiles',
+  'obituaries',
+  'insider'
+];
 
 router.get('/status-check', function (req, res, next) {
   res.status(200).json({
@@ -108,6 +138,47 @@ router.post('/login', cors(corsOptions), function (req, res, next) {
         });
       });
   }
+});
+
+router.get('/top-stories/:section_name', cors(corsOptions), function (req, res, next) {
+  var authorizationHeader = req.get('authorization');
+
+  if (!authorizationHeader || authorizationHeader.indexOf('Bearer ') === -1) {
+    return res.status(400).json({
+      message: '잘못된 요청입니다.'
+    });
+  }
+
+  authorizationHeader = authorizationHeader.split('Bearer ')[1];
+  var decodedToken = jwt.verify(authorizationHeader, JWT_SECRET);
+
+  if (!decodedToken || !decodedToken.username) {
+    return res.status(401).json({
+      message: '권한이 없습니다.'
+    });
+  }
+
+  if (!req.params.section_name || VALID_SECTIONS.indexOf(req.params.section_name) === -1) {
+    return res.status(400).json({
+      message: '잘못된 요청입니다.'
+    });
+  }
+
+  request.get({
+    url: `https://api.nytimes.com/svc/topstories/v2/${req.params.section_name}.json`,
+    qs: {
+      'api-key': "ddebb6e03d6f49648bdb0830ba37a061"
+    },
+  }, function(error, response, body) {
+    if (error) {
+      return res.status(500).json({
+        message: '서버에 오류가 있었습니다.'
+      });
+    }
+
+    body = JSON.parse(body);
+    res.status(200).json(body);
+  });
 });
 
 router.get('*', function (req, res, next) {
