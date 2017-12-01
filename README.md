@@ -57,26 +57,26 @@ password: <String>
   results:
    [
      {
-        section: string
-        subsection: string
-        title: string
-        abstract: string
-        url: string
-        thumbnail_standard: string
-        short_url: string
-        byline: string
-        item_type: string
-        updated_date: string
-        created_date: string
-        published_date: string
-        material_type_facet: string
-        kicker: string
-        des_facet: []
-        org_facet: []
-        per_facet: []
-        geo_facet: []
-        multimedia: []
-        related_urls: []
+        section: <String>
+        subsection: <String>
+        title: <String>
+        abstract: <String>
+        url: <String>
+        thumbnail_standard: <String>
+        short_url: <String>
+        byline: <String>
+        item_type: <String>
+        updated_date: <String>
+        created_date: <String>
+        published_date: <String>
+        material_type_facet: <String>
+        kicker: <String>
+        des_facet: <Array>
+        org_facet: <Array>
+        per_facet: <Array>
+        geo_facet: <Array>
+        multimedia: <Array>
+        related_urls: <Array>
     }
   ]
 }
