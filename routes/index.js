@@ -4,14 +4,22 @@ var User = require('../models/User');
 var sha256 = require('crypto-js/sha256');
 var hmacSHA512 = require('crypto-js/hmac-sha512');
 var Base64 = require('crypto-js/enc-base64');
+var cors = require('cors');
 
-router.get('/users/:id', function (req, res, next) {
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+};
+
+router.get('/status-check', function (req, res, next) {
   res.status(200).json({
-    message: 'hello world'
+    message: 'Hello, Vanilla'
   });
 });
 
-router.post('/signup', function (req, res, next) {
+router.options('/signup', cors(corsOptions));
+
+router.post('/signup', cors(corsOptions), function (req, res, next) {
   if (!req.body.username || !req.body.password) {
     res.status(400).json({
       message: '사용자 이름과 비밀번호는 필수입니다.'
@@ -21,8 +29,7 @@ router.post('/signup', function (req, res, next) {
     var hmacDigest = Base64.stringify(hmacSHA512(hashDigest, req.body.username));
 
     User.findOne({
-      username: req.body.username,
-      password: hmacDigest
+      username: req.body.username
     }).exec()
       .then((user) => {
         if (!user) {
@@ -56,7 +63,9 @@ router.post('/signup', function (req, res, next) {
   }
 });
 
-router.post('/login', function (req, res, next) {
+router.options('/login', cors(corsOptions));
+
+router.post('/login', cors(corsOptions), function (req, res, next) {
   if (!req.body.username || !req.body.password) {
     res.status(400).json({
       message: '사용자 이름과 비밀번호는 필수입니다.'
@@ -70,10 +79,16 @@ router.post('/login', function (req, res, next) {
       password: hmacDigest
     }).select('-password').exec()
       .then((user) => {
-        res.status(201).json({
-          data: user,
-          access_token: hmacDigest
-        });
+        if (user) {
+          res.status(200).json({
+            data: user,
+            access_token: hmacDigest
+          });
+        } else {
+          res.status(401).json({
+            message: '사용자 이름과 비밀번호가 틀렸습니다.'
+          });
+        }
       })
       .catch((error) => {
         res.status(500).json({
