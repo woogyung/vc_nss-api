@@ -128,7 +128,7 @@ cd nss-api
 npm install
 ```
 
-### 데이터베이스 설정
+### 데이터베이스 설정 (선택 사항)
 
 * [mlab](https://mlab.com) 가입하기
 * 데이터베이스 생성
