@@ -5,9 +5,12 @@ var sha256 = require('crypto-js/sha256');
 var hmacSHA512 = require('crypto-js/hmac-sha512');
 var Base64 = require('crypto-js/enc-base64');
 var cors = require('cors');
+var jwt = require('jsonwebtoken');
+
+var JWT_SECRET = 'vAn!LlaCod!NG';
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   optionsSuccessStatus: 200
 };
 
@@ -80,9 +83,17 @@ router.post('/login', cors(corsOptions), function (req, res, next) {
     }).select('-password').exec()
       .then((user) => {
         if (user) {
+          console.log(user);
+
+          var token = jwt.sign({
+            username: req.body.username
+          }, JWT_SECRET, {
+            expiresIn: '24h'
+          });
+
           res.status(200).json({
             data: user,
-            access_token: hmacDigest
+            access_token: token
           });
         } else {
           res.status(401).json({
@@ -92,7 +103,8 @@ router.post('/login', cors(corsOptions), function (req, res, next) {
       })
       .catch((error) => {
         res.status(500).json({
-          message: '서버에 오류가 있었습니다.'
+          message: '서버에 오류가 있었습니다.',
+          error: error
         });
       });
   }
