@@ -50,7 +50,35 @@ password: <String>
 ```
 
 ### 4. GET `/top-stories/{SECTION_NAME}`
-- SECTION_NAME: 원하는 섹션을 의미하는 다음 중 하나의 값 `home, opinion, world, national, politics, upshot, nyregion, business, technology, science, health, sports, arts, books, movies, theater, sundayreview, fashion, tmagazine, food, travel, magazine, realestate, automobiles, obituaries, insider`
+- SECTION_NAME: 원하는 섹션을 의미하는 다음 중 하나의 값
+```
+home,
+opinion,
+world,
+national,
+politics,
+upshot,
+nyregion,
+business,
+technology,
+science,
+health,
+sports,
+arts,
+books,
+movies,
+theater,
+sundayreview,
+fashion,
+tmagazine,
+food,
+travel,
+magazine,
+realestate,
+automobiles,
+obituaries,
+insider
+```
 - Required Header Option
 ```
 Authorization: Bearer {ACCESS_TOKEN}
