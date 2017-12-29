@@ -11,7 +11,9 @@ var request = require('request');
 var JWT_SECRET = 'vAn!LlaCod!NG';
 
 var corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:3000',
+  methods: ['GET'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 };
 
@@ -51,6 +53,7 @@ router.get('/status-check', function (req, res, next) {
 });
 
 router.options('/signup', cors(corsOptions));
+router.options('/top-stories/*', cors(corsOptions));
 
 router.post('/signup', cors(corsOptions), function (req, res, next) {
   if (!req.body.username || !req.body.password) {
@@ -97,6 +100,7 @@ router.post('/signup', cors(corsOptions), function (req, res, next) {
 });
 
 router.options('/login', cors(corsOptions));
+router.options('/top-stories', cors(corsOptions));
 
 router.post('/login', cors(corsOptions), function (req, res, next) {
   if (!req.body.username || !req.body.password) {
