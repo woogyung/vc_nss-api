@@ -4,7 +4,7 @@
 
 ## Endpoints
 
-### 1. Status Check `/status-check`
+### 1. GET Status Check `/status-check`
 - Response
 ```
 {
